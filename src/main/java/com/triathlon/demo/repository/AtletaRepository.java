@@ -3,6 +3,8 @@ package com.triathlon.demo.repository;
 import com.triathlon.demo.modelo.Atleta;
 import com.triathlon.demo.modelo.enums.*;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -29,5 +31,6 @@ public interface AtletaRepository extends JpaRepository<Atleta, Long> {
     List<Atleta> findByModalidadCross(boolean modalidadCross);
 
     /** borra un atleta de la bd usando su numero de documento */
+    @Transactional
     void deleteByIdentificacion(String identificacion);
 }

@@ -6,6 +6,7 @@ import com.triathlon.demo.modelo.enums.*;
 import com.triathlon.demo.service.AtletaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -96,8 +97,9 @@ public class AtletaController {
 
     /** elimina un atleta por su numero de documento */
     @DeleteMapping("/identificacion/{identificacion}")
-    public void eliminarPorIdentificacion(@PathVariable String identificacion) {
+    public ResponseEntity<Void> eliminarPorIdentificacion(@PathVariable String identificacion) {
         atletaService.eliminarPorIdentificacion(identificacion);
+        return ResponseEntity.ok().build();
     }
 
     /** cambia la especialidad de un atleta */
