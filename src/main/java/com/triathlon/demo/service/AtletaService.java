@@ -13,11 +13,13 @@ public interface AtletaService {
     AtletaResponseDTO modificarNombre(Long id, String nombre);
     AtletaResponseDTO modificarIdentificacion(Long id, String identificacion);
     AtletaResponseDTO modificarCategoria(Long id, Categoria categoria);
+    AtletaResponseDTO modificarEspecialidad(Long id, Especialidad especialidad);
+    AtletaResponseDTO modificarCross(Long id, boolean modalidadCross);
     Optional<AtletaResponseDTO> consultarPorIdentificacion(String identificacion);
     List <AtletaResponseDTO> consultarPorCategoria(Categoria categoria);
     List <AtletaResponseDTO> consultarPorGenero(Genero genero);
     List <AtletaResponseDTO> consultarPorEspecialidad(Especialidad especialidad);
     List <AtletaResponseDTO> consultarPorModalidadCross(boolean modalidadCross);
     void eliminarAtleta(Long id);
-
+    void eliminarPorIdentificacion(String identificacion);
 }

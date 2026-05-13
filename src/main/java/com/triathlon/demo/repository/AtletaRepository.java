@@ -14,5 +14,5 @@ public interface AtletaRepository extends JpaRepository<Atleta, Long> {
     List<Atleta> findByCategoria(Categoria categoria);
     List<Atleta> findByEspecialidad(Especialidad especialidad);
     List<Atleta> findByModalidadCross(boolean modalidadCross);
-
+    void deleteByIdentificacion(String identificacion);
 }

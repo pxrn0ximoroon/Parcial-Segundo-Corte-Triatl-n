@@ -76,4 +76,19 @@ public class AtletaController {
     public void eliminar(@PathVariable Long id) {
         atletaService.eliminarAtleta(id);
     }
+    @DeleteMapping("/identificacion/{identificacion}")
+    public void eliminarPorIdentificacion(@PathVariable String identificacion) {
+        atletaService.eliminarPorIdentificacion(identificacion);
+    }
+    @PutMapping("/{id}/especialidad")
+    public AtletaResponseDTO modificarEspecialidad(@PathVariable Long id,
+                                                   @RequestParam Especialidad especialidad) {
+        return atletaService.modificarEspecialidad(id, especialidad);
+    }
+
+    @PutMapping("/{id}/cross")
+    public AtletaResponseDTO modificarCross(@PathVariable Long id,
+                                            @RequestParam boolean modalidadCross) {
+        return atletaService.modificarCross(id, modalidadCross);
+    }
 }

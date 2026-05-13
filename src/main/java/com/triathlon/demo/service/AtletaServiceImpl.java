@@ -97,6 +97,10 @@ public class AtletaServiceImpl implements AtletaService {
     }
 
     @Override
+    public void eliminarPorIdentificacion(String identificacion) {
+        atletaRepository.deleteByIdentificacion(identificacion);
+    }
+    @Override
     public void eliminarAtleta(Long id) {
         atletaRepository.deleteById(id);
     }
