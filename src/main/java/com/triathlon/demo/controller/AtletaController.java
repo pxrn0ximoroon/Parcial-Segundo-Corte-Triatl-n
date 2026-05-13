@@ -18,6 +18,7 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/atleta")
+@CrossOrigin (origins = "*")
 public class AtletaController {
 
     /** servicio donde esta la logica de los atletas */
