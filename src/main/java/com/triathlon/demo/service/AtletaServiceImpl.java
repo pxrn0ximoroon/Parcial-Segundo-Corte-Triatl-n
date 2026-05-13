@@ -104,7 +104,21 @@ public class AtletaServiceImpl implements AtletaService {
     public void eliminarAtleta(Long id) {
         atletaRepository.deleteById(id);
     }
+    @Override
+    public AtletaResponseDTO modificarEspecialidad(Long id, Especialidad especialidad) {
+        Atleta atleta = atletaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Atleta no encontrado"));
+        atleta.setEspecialidad(especialidad);
+        return AtletaMapper.toResponse(atletaRepository.save(atleta));
+    }
 
+    @Override
+    public AtletaResponseDTO modificarCross(Long id, boolean modalidadCross) {
+        Atleta atleta = atletaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Atleta no encontrado"));
+        atleta.setModalidadCross(modalidadCross);
+        return AtletaMapper.toResponse(atletaRepository.save(atleta));
+    }
     private Categoria calcularCategoria(int edad) {
         if (edad == 7)  return Categoria.PRE_BENJAMIN;
         if (edad <= 9)  return Categoria.BENJAMIN;
