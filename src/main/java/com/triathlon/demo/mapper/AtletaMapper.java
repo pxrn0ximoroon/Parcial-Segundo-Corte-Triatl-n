@@ -5,10 +5,16 @@ import com.triathlon.demo.dto.AtletaResponseDTO;
 import com.triathlon.demo.modelo.Atleta;
 import java.util.Base64;
 
-
+/**
+ * Clase para convertir entre la entidad atleta y los dtos.
+ * Se usa para no exponer la entidad directamente al frontend.
+ */
 public class AtletaMapper {
 
-
+    /**
+     * Convierte un requestDTO a entidad atleta para guardarla en la bd.
+     * si el atleta mando foto la decodifica de base64 a bytes.
+     */
     public static Atleta toEntity(AtletaRequestDTO dto) {
         Atleta atleta = new Atleta();
         atleta.setIdentificacion(dto.getIdentificacion());
@@ -26,6 +32,10 @@ public class AtletaMapper {
         return atleta;
     }
 
+    /**
+     * Convierte una entidad atleta a responseDTO para mandarla al frontend.
+     * si el atleta tiene foto la convierte a base64 para mostrarla en el html.
+     */
     public static AtletaResponseDTO toResponse(Atleta atleta) {
         AtletaResponseDTO dto = new AtletaResponseDTO();
         dto.setId(atleta.getId());

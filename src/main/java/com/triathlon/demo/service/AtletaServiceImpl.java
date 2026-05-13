@@ -13,14 +13,26 @@ import java.util.stream.Collectors;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Aca va toda la logica del negocio pa los atletas.
+ * Se comunica con el repositorio pa guardar y consultar datos
+ * y con el emailService pa mandar correos cuando se registra alguien.
+ */
 @Service
 public class AtletaServiceImpl implements AtletaService {
+
+    /** repositorio pa acceder a los datos de atletas en la bd */
     @Autowired
     private AtletaRepository atletaRepository;
 
+    /** servicio pa mandar correos electronicos */
     @Autowired
     private EmailService emailService;
 
+    /**
+     * Crea un atleta nuevo, le calcula la categoria segun la edad
+     * y le manda un correo de bienvenida al registrarse.
+     */
     @Override
     public AtletaResponseDTO crearAtleta(AtletaRequestDTO dto) {
         Atleta atleta = AtletaMapper.toEntity(dto);
@@ -29,6 +41,8 @@ public class AtletaServiceImpl implements AtletaService {
         emailService.enviarCorreoRegistro(dto.getEmail(), dto.getNombre());
         return response;
     }
+
+    /** guarda la especialidad y modalidad cross del atleta */
     @Override
     public AtletaResponseDTO configurarPreferencias(Long id, Especialidad especialidad, boolean modalidadCross) {
         Atleta atleta = atletaRepository.findById(id)
@@ -38,6 +52,7 @@ public class AtletaServiceImpl implements AtletaService {
         return AtletaMapper.toResponse(atletaRepository.save(atleta));
     }
 
+    /** cambia el nombre del atleta */
     @Override
     public AtletaResponseDTO modificarNombre(Long id, String nombre) {
         Atleta atleta = atletaRepository.findById(id)
@@ -46,6 +61,7 @@ public class AtletaServiceImpl implements AtletaService {
         return AtletaMapper.toResponse(atletaRepository.save(atleta));
     }
 
+    /** cambia el numero de documento del atleta */
     @Override
     public AtletaResponseDTO modificarIdentificacion(Long id, String identificacion) {
         Atleta atleta = atletaRepository.findById(id)
@@ -54,6 +70,7 @@ public class AtletaServiceImpl implements AtletaService {
         return AtletaMapper.toResponse(atletaRepository.save(atleta));
     }
 
+    /** cambia la categoria del atleta */
     @Override
     public AtletaResponseDTO modificarCategoria(Long id, Categoria categoria) {
         Atleta atleta = atletaRepository.findById(id)
@@ -62,12 +79,14 @@ public class AtletaServiceImpl implements AtletaService {
         return AtletaMapper.toResponse(atletaRepository.save(atleta));
     }
 
+    /** busca un atleta por su numero de documento */
     @Override
     public Optional<AtletaResponseDTO> consultarPorIdentificacion(String identificacion) {
         return atletaRepository.findByIdentificacion(identificacion)
                 .map(AtletaMapper::toResponse);
     }
 
+    /** trae todos los atletas de una categoria */
     @Override
     public List<AtletaResponseDTO> consultarPorCategoria(Categoria categoria) {
         return atletaRepository.findByCategoria(categoria)
@@ -76,6 +95,7 @@ public class AtletaServiceImpl implements AtletaService {
                 .collect(Collectors.toList());
     }
 
+    /** trae todos los atletas de un genero */
     @Override
     public List<AtletaResponseDTO> consultarPorGenero(Genero genero) {
         return atletaRepository.findByGenero(genero)
@@ -84,6 +104,7 @@ public class AtletaServiceImpl implements AtletaService {
                 .collect(Collectors.toList());
     }
 
+    /** trae todos los atletas de una especialidad */
     @Override
     public List<AtletaResponseDTO> consultarPorEspecialidad(Especialidad especialidad) {
         return atletaRepository.findByEspecialidad(especialidad)
@@ -92,6 +113,7 @@ public class AtletaServiceImpl implements AtletaService {
                 .collect(Collectors.toList());
     }
 
+    /** trae atletas segun si participan en cross o no */
     @Override
     public List<AtletaResponseDTO> consultarPorModalidadCross(boolean modalidadCross) {
         return atletaRepository.findByModalidadCross(modalidadCross)
@@ -100,14 +122,19 @@ public class AtletaServiceImpl implements AtletaService {
                 .collect(Collectors.toList());
     }
 
+    /** borra un atleta usando su numero de documento */
     @Override
     public void eliminarPorIdentificacion(String identificacion) {
         atletaRepository.deleteByIdentificacion(identificacion);
     }
+
+    /** borra un atleta usando su id interno de la bd */
     @Override
     public void eliminarAtleta(Long id) {
         atletaRepository.deleteById(id);
     }
+
+    /** cambia la especialidad del atleta */
     @Override
     public AtletaResponseDTO modificarEspecialidad(Long id, Especialidad especialidad) {
         Atleta atleta = atletaRepository.findById(id)
@@ -116,6 +143,7 @@ public class AtletaServiceImpl implements AtletaService {
         return AtletaMapper.toResponse(atletaRepository.save(atleta));
     }
 
+    /** cambia si el atleta participa en cross o no */
     @Override
     public AtletaResponseDTO modificarCross(Long id, boolean modalidadCross) {
         Atleta atleta = atletaRepository.findById(id)
@@ -124,6 +152,10 @@ public class AtletaServiceImpl implements AtletaService {
         return AtletaMapper.toResponse(atletaRepository.save(atleta));
     }
 
+    /**
+     * Calcula la categoria del atleta segun su edad.
+     * Va desde pre-benjamin con 7 añitos hasta veterano 3 con 60 o mas.
+     */
     private Categoria calcularCategoria(int edad) {
         if (edad == 7)  return Categoria.PRE_BENJAMIN;
         if (edad <= 9)  return Categoria.BENJAMIN;

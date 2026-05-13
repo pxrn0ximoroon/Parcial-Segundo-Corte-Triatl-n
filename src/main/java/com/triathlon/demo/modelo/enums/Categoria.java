@@ -1,5 +1,8 @@
 package com.triathlon.demo.modelo.enums;
-
+/**
+ * Categorias disponibles para los atletas segun su edad.
+ * La categoria se asigna automaticamente al registrarse.
+ */
 public enum Categoria {
     PRE_BENJAMIN,
     BENJAMIN,
