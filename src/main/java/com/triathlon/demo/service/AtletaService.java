@@ -1,21 +1,23 @@
 package com.triathlon.demo.service;
 
+import com.triathlon.demo.dto.AtletaRequestDTO;
+import com.triathlon.demo.dto.AtletaResponseDTO;
 import com.triathlon.demo.modelo.Atleta;
 import com.triathlon.demo.modelo.enums.*;
 
 import java.util.*;
 
 public interface AtletaService {
-    Atleta crearAtleta(Atleta atleta);
-    Atleta configurarPreferencias(Long id, Especialidad especialidad, boolean modalidadCross);
-    Atleta modificarNombre(Long id, String nombre);
-    Atleta modificarIdentificacion(Long id, String identificacion);
-    Atleta modificarCategoria(Long id, Categoria categoria);
-    Optional<Atleta> consultarPorIdentificacion(String identificacion);
-    List <Atleta> consultarPorCategoria(Categoria categoria);
-    List <Atleta> consultarPorGenero(Genero genero);
-    List <Atleta> consultarPorEspecialidad(Especialidad especialidad);
-    List <Atleta> consultarPorModalidadCross(boolean modalidadCross);
+    AtletaResponseDTO crearAtleta(AtletaRequestDTO atletaRequestDTO);
+    AtletaResponseDTO configurarPreferencias(Long id, Especialidad especialidad, boolean modalidadCross);
+    AtletaResponseDTO modificarNombre(Long id, String nombre);
+    AtletaResponseDTO modificarIdentificacion(Long id, String identificacion);
+    AtletaResponseDTO modificarCategoria(Long id, Categoria categoria);
+    Optional<AtletaResponseDTO> consultarPorIdentificacion(String identificacion);
+    List <AtletaResponseDTO> consultarPorCategoria(Categoria categoria);
+    List <AtletaResponseDTO> consultarPorGenero(Genero genero);
+    List <AtletaResponseDTO> consultarPorEspecialidad(Especialidad especialidad);
+    List <AtletaResponseDTO> consultarPorModalidadCross(boolean modalidadCross);
     void eliminarAtleta(Long id);
 
 }
