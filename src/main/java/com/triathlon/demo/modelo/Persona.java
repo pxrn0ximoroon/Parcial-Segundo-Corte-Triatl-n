@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
  * Es abstracta porque nunca se va a crear una persona sola,
  * siempre va a ser un atleta.
  */
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-@Entity
+@MappedSuperclass
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,7 +19,7 @@ public abstract class Persona {
 
     /** id unico que genera jpa solo, nunca lo toca el usuario */
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     /** numero de documento de la persona */
