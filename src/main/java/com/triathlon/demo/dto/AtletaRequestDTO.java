@@ -27,6 +27,6 @@ public class AtletaRequestDTO {
 
     @NotNull(message = "La especialidad es obligatoria")
     private Especialidad especialidad;
-
+    private String foto;
     private boolean modalidadCross;
 }

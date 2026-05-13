@@ -4,6 +4,7 @@ import com.triathlon.demo.dto.AtletaRequestDTO;
 import com.triathlon.demo.dto.AtletaResponseDTO;
 import com.triathlon.demo.modelo.enums.*;
 import com.triathlon.demo.service.AtletaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class AtletaController {
     private AtletaService atletaService;
 
     @PostMapping("/crear")
-    public AtletaResponseDTO crearAtleta(@RequestBody AtletaRequestDTO dto) {
+    public AtletaResponseDTO crearAtleta(@RequestBody @Valid AtletaRequestDTO dto) {
         return atletaService.crearAtleta(dto);
     }
 

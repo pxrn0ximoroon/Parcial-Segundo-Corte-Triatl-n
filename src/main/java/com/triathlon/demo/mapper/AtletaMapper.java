@@ -18,6 +18,10 @@ public class AtletaMapper {
         atleta.setGenero(dto.getGenero());
         atleta.setEspecialidad(dto.getEspecialidad());
         atleta.setModalidadCross(dto.isModalidadCross());
+        if (dto.getFoto() != null && !dto.getFoto().isEmpty()) {
+            byte[] fotoBytes = Base64.getDecoder().decode(dto.getFoto());
+            atleta.setFoto(fotoBytes);
+        }
 
         return atleta;
     }

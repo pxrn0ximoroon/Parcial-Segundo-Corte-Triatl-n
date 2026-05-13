@@ -18,13 +18,17 @@ public class AtletaServiceImpl implements AtletaService {
     @Autowired
     private AtletaRepository atletaRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     @Override
     public AtletaResponseDTO crearAtleta(AtletaRequestDTO dto) {
         Atleta atleta = AtletaMapper.toEntity(dto);
         atleta.setCategoria(calcularCategoria(atleta.getEdad()));
-        return AtletaMapper.toResponse(atletaRepository.save(atleta));
+        AtletaResponseDTO response = AtletaMapper.toResponse(atletaRepository.save(atleta));
+        emailService.enviarCorreoRegistro(dto.getEmail(), dto.getNombre());
+        return response;
     }
-
     @Override
     public AtletaResponseDTO configurarPreferencias(Long id, Especialidad especialidad, boolean modalidadCross) {
         Atleta atleta = atletaRepository.findById(id)
@@ -119,6 +123,7 @@ public class AtletaServiceImpl implements AtletaService {
         atleta.setModalidadCross(modalidadCross);
         return AtletaMapper.toResponse(atletaRepository.save(atleta));
     }
+
     private Categoria calcularCategoria(int edad) {
         if (edad == 7)  return Categoria.PRE_BENJAMIN;
         if (edad <= 9)  return Categoria.BENJAMIN;
